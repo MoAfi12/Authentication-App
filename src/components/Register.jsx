@@ -13,26 +13,51 @@ function Register(){
  const[password , setPassword] = useState('')
  const[checkPassword  , setCheckPasword] = useState(false)
  const[checkUsername  , setCheckUsername] = useState(false)
+ const[checkEmail  , setCheckEmail] = useState(false)
  const[checInputs  , setCheckInputs] = useState(false)
  
 
-function handleClick(e){
-    e.preventDefault()
+function handleClick(event){
+    event.preventDefault()
     if(name.trim() === '' || email.trim() === '' || password.trim() === ''){
        setCheckInputs(true)
+       return;
     }else{
         setCheckInputs(false)
     }
-    if(name.match(/[A-Z]/)){
+
+    if(name.length < 4 || !/\d/.test(name) || !/[a-zA-Z]/.test(name)){
         setCheckUsername(true)
-    }else{
-        setCheckUsername(false)
+        return;
     }
-    if(password.length < 5){
+    else{
+      setCheckUsername(false)
+    } 
+
+
+       const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };
+
+       if (!isValidEmail(email)) {
+        setCheckEmail(true);
+        return;
+      } else{
+        setCheckEmail(false)
+      }
+
+
+    if (password.length < 5 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*]/.test(password)) {
         setCheckPasword(true)
-    } else{
+        return;
+      } else{
         setCheckPasword(false)
-    }
+      }
+
+
+    
+   
      const newData = { name , email , password}
     const existAccount = localStorage.getItem("data")
    
@@ -121,15 +146,19 @@ const handleRegister = ()=>{
                     <label htmlFor="">Username</label> <br />
                 <input className="bg-gray-100 px-3 focus-within:border-gray-400 focus-within:bg-slate-200  py-2 w-full mb-7 mt-2 rounded-sm outline-none border border-b-gray-300" type="text" value={name} onChange={(e) => setName(e.target.value)} /> <br />
                 {checkUsername && (
-                <p className="-mt-6 mb-1  text-red-500">Username most small leters </p>
+                <p className="-mt-6 mb-1  text-red-500">must have at least 4 characters and contain both numbers and letters. </p>
                 )}
                     <label htmlFor="">E-mail</label> <br />
                 <input className="bg-gray-100  focus-within:border-gray-400  px-3 focus-within:bg-slate-200 py-2 w-full  mt-2 mb-7 rounded-sm outline-none border border-b-gray-300" type="email" value={email} onChange={(e)=> setEmail(e.target.value)} /> <br />
+                {checkEmail && (
+                    <p className="-mt-6 mb-9  text-red-500">Email must contain symbol email @.</p>
+                )}
+                
                 
                     <label htmlFor="">Password</label> <br />
                 <input className="bg-gray-100 px-3 focus-within:bg-slate-200 py-2 focus-within:border-gray-400 w-full mb-7 mt-2 rounded-sm outline-none border border-b-gray-300" type="password" value={password} onChange={(e)=> setPassword(e.target.value)} />
                 {checkPassword && (
-                <p className="-mt-6 mb-9  text-red-500">Password not less 5 characters </p>
+                <p className="-mt-6 mb-9  text-red-500">'Password must contain symbols, numbers, and letters, and be at least 5 characters long.'</p>
                 )}
                 </form>
 
