@@ -103,6 +103,10 @@ function handleClick(e){
 
 }
 
+const handleRegister = ()=>{
+    navigate("/login")
+   }
+
 
     return(
         <>
@@ -130,7 +134,7 @@ function handleClick(e){
                 </form>
 
                 <button className="bg-green-500 text-white text-xl tracking-wider rounded-sm px-10 py-1 font-semibold  mx-auto flex" onClick={handleClick}>Register</button>
-                <p className="text-center mt-6">Allready I have Account <a className="text-blue-600" href="login">Login</a></p>
+                <p className="text-center text-lg mt-6 ">I have account <span className="text-blue-600 font-medium hover:cursor-pointer ml-1" onClick={handleRegister}> Sign in </span></p>
                 <ToastContainer />
             </div>
         </div>

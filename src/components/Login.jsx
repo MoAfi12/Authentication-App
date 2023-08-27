@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { GlobalContext } from "../Usecontent"
 import { stringify } from "postcss"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Register from "./Register"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -83,7 +83,9 @@ const Login = () =>{
       
       }
       
-     
+      const handleRegister = ()=>{
+        navigate("/register")
+       }
  
     
    
@@ -105,7 +107,7 @@ const Login = () =>{
                 </form>
 
                 <button className="bg-green-500 text-white text-xl tracking-wider rounded-sm px-10 py-1 font-semibold w-[40%] mx-auto justify-center flex" onClick={handleClick}>Login</button>
-                <p className="text-center mt-6">Have Not Account <a className="text-blue-600 " href="register">Sign Up</a></p>
+                <p className="text-center mt-6 text-lg">Have Not Account <span className="text-blue-600 font-medium hover:cursor-pointer ml-1" onClick={handleRegister}> Sign Up </span></p>
                 
                 <ToastContainer />
             </div>
